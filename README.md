@@ -16,48 +16,48 @@ A cross-platform command-line tool to copy a file with a timestamped name and au
 - Works on Windows and Linux.
 - Standalone executable (no Node.js required on target machine).
 
-### Installation (for building)
+## Installation (for building)
 
 You need Node.js ≥16.2:
 
 npm install
 
-### Usage
+## Usage
 
-# Show help
+### Show help
 arch-copier
 
-# Basic copy (uses default -P=10)
+### Basic copy (uses default -P=10)
 arch-copier ./report.zip ./archive
 
-# Keep only 30 latest files
+### Keep only 30 latest files
 arch-copier C:\data\log.zip D:\backup -L=30
 
-# Ensure free space = 20 × file size
+### Ensure free space = 20 × file size
 arch-copier /home/user/data.tar.gz /mnt/archive -S=20 -O
 
-### Build standalone executable
+## Build standalone executable
 
-# Build for Windows
+### Build for Windows
 npm run build:win    # → arch-copier.exe
 
-# Build for Linux
+### Build for Linux
 npm run build:linux  # → arch-copier
 
-# Build both
+### Build both
 npm run build
 
 The resulting binary can be copied to any machine (even without Node.js) and run directly.
 
-### Dependencies
+## Dependencies
 - diskusage — for accurate free space detection.
 - pkg — for packaging into executable.
 
 ---
 
-## 🇷🇺 Русский
+# 🇷🇺 Русский
 
-### Возможности
+## Возможности
 - Копирует файл в целевую папку с именем вида: 2025-11-07-14-30-45-имяфайла.расширение.
 - Поддерживает три режима очистки архива:
   - -L=N: хранить не более N файлов (лишние — удаляются, начиная со старых).
@@ -67,39 +67,39 @@ The resulting binary can be copied to any machine (even without Node.js) and run
 - Работает на Windows и Linux.
 - Собирается в standalone-исполняемый файл (не требует Node.js на целевой машине).
 
-### Установка (для сборки)
+## Установка (для сборки)
 
 Требуется Node.js ≥16.2:
 
 npm install
 
-### Использование
+## Использование
 
-# Показать справку
+### Показать справку
 arch-copier
 
-# Простое копирование (по умолчанию -P=10)
+### Простое копирование (по умолчанию -P=10)
 arch-copier ./report.zip ./archive
 
-# Хранить только 30 последних файлов
+### Хранить только 30 последних файлов
 arch-copier C:\data\log.zip D:\backup -L=30
 
-# Оставить место = 20 × размер файла
+### Оставить место = 20 × размер файла
 arch-copier /home/user/data.tar.gz /mnt/archive -S=20 -O
 
-### Сборка standalone-файла
+# Сборка standalone-файла
 
-# Для Windows
+### Для Windows
 npm run build:win    # → arch-copier.exe
 
-# Для Linux
+### Для Linux
 npm run build:linux  # → arch-copier
 
-# Собрать обе версии
+### Собрать обе версии
 npm run build
 
 Полученный исполняемый файл можно копировать на любую машину (даже без Node.js) и запускать напрямую.
 
-### Зависимости
+## Зависимости
 - diskusage — для точного определения свободного места.
 - pkg — для упаковки в исполняемый файл.
