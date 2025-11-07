@@ -1,30 +1,31 @@
 {
   "name": "arch-copier",
-  "version": "1.0.0",
-  "description": "Copy file with timestamped name and manage archive by limits",
+  "version": "1.1.0",
+  "description": "Copy file with timestamped name and manage archive with Telegram notifications",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "build:win": "pkg . --targets node16-win-x64 --output arch-copier.exe",
     "build:linux": "pkg . --targets node16-linux-x64 --output arch-copier",
-    "build": "npm run build:win && npm run build:linux"    
+    "build": "npm run build:win && npm run build:linux"
   },
   "bin": "index.js",
   "pkg": {
     "assets": [
       "node_modules/diskusage/**/*"
     ]
-  },  
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "diskusage": "^1.2.0"
+    "diskusage": "^1.2.0",
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "pkg": "^5.8.1"
   },
   "engines": {
     "node": ">=16.2.0"
-  }  
+  }
 }
