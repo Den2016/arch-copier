@@ -23,7 +23,9 @@ A cross-platform command-line tool to copy a file with a timestamped name and au
 
 ### Installation (for building)
 
+```
 npm install
+```
 
 > This installs diskusage and node-fetch@2 (CommonJS-compatible).
 
@@ -36,27 +38,41 @@ npm install
 ### Usage
 
 # Show help
+```
 arch-copier
+```
 
 # Basic copy (default: -P=10)
+```
 arch-copier ./report.zip ./archive
+```
 
 # Keep only 30 latest files
+```
 arch-copier C:\data\log.zip D:\backup -L=30
+```
 
 # Copy with Telegram notification and disk stats
+```
 arch-copier /home/user/app.log /mnt/archive -P=15 -T=123456:ABCdef -C=987654321 -M="Nightly logs"
+```
 
 ### Build standalone executable
 
 # For Windows
+```
 npm run build:win    # → arch-copier.exe
+```
 
 # For Linux
+```
 npm run build:linux  # → arch-copier
+```
 
 # Build both
+```
 npm run build
+```
 
 The resulting binary can be copied to any machine (even without Node.js) and run directly.
 
@@ -85,7 +101,9 @@ The resulting binary can be copied to any machine (even without Node.js) and run
 
 ### Установка (для сборки)
 
+```
 npm install
+```
 
 > Устанавливает diskusage и node-fetch@2 (совместимый с CommonJS).
 
@@ -98,27 +116,39 @@ npm install
 ### Использование
 
 # Показать справку
+```
 arch-copier
+```
 
 # Простое копирование (по умолчанию -P=10)
+```
 arch-copier ./report.zip ./archive
+```
 
 # Хранить только 30 последних файлов
+```
 arch-copier C:\data\log.zip D:\backup -L=30
-
+```
 # Копирование с уведомлением в Telegram и статистикой по диску
+```
 arch-copier /home/user/app.log /mnt/archive -P=15 -T=123456:ABCdef -C=987654321  -M="Nightly logs"
-
+```
 ### Сборка standalone-файла
 
 # Для Windows
+```
 npm run build:win    # → arch-copier.exe
+```
 
 # Для Linux
+```
 npm run build:linux  # → arch-copier
+```
 
 # Собрать обе версии
+```
 npm run build
+```
 
 Полученный исполняемый файл можно копировать на любую машину (даже без Node.js) и запускать напрямую.
 
