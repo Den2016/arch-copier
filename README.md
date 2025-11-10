@@ -45,7 +45,7 @@ arch-copier ./report.zip ./archive
 arch-copier C:\data\log.zip D:\backup -L=30
 
 # Copy with Telegram notification and disk stats
-arch-copier /home/user/app.log /mnt/archive -P=15 -T=123456:ABCdef -C=987654321
+arch-copier /home/user/app.log /mnt/archive -P=15 -T=123456:ABCdef -C=987654321 -M="Nightly logs"
 
 ### Build standalone executable
 
@@ -107,7 +107,7 @@ arch-copier ./report.zip ./archive
 arch-copier C:\data\log.zip D:\backup -L=30
 
 # Копирование с уведомлением в Telegram и статистикой по диску
-arch-copier /home/user/app.log /mnt/archive -P=15 -T=123456:ABCdef -C=987654321
+arch-copier /home/user/app.log /mnt/archive -P=15 -T=123456:ABCdef -C=987654321  -M="Nightly logs"
 
 ### Сборка standalone-файла
 

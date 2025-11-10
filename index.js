@@ -21,9 +21,10 @@ Options:
   -O       — overwrite if a file with the same name already exists
   -T=TOKEN — Telegram bot token (e.g. 123456:ABCdef)
   -C=ID    — Telegram chat ID (your user ID or group ID)
+  -M=TEXT  — custom message for Telegram notification (e.g. "Nightly backup")
 
 Examples:
-  arch-copier report.zip ./archive -P=10 -T=123456:ABC -C=987654321
+  arch-copier report.zip ./archive -P=10 -T=123456:ABC -C=987654321 -M="Daily log backup"
   arch-copier C:\\log.zip D:\\backup -L=20 -O
 
 Note:
@@ -88,7 +89,7 @@ async function applyLimitByCount(targetDir, maxFiles) {
       console.log(`Deleted oldest file: ${file.name}`);
     }
   }
-  return files.length; // count before cleanup
+  return files.length;
 }
 
 async function applyLimitByFreeSpace(targetDir, requiredFreeBytes) {
@@ -129,6 +130,7 @@ async function main() {
   let overwrite = false;
   let telegramToken = null;
   let telegramChatId = null;
+  let customMessage = null; // <-- NEW
 
   const positional = [];
   for (const arg of args) {
@@ -160,6 +162,8 @@ async function main() {
     } else if (arg.startsWith('-C=')) {
       const id = arg.split('=')[1];
       telegramChatId = isNaN(id) ? id : parseInt(id, 10);
+    } else if (arg.startsWith('-M=')) { // <-- NEW
+      customMessage = arg.substring(3); // removes '-M='
     } else {
       positional.push(arg);
     }
@@ -179,7 +183,10 @@ async function main() {
     await fs.access(source);
   } catch {
     console.error(`Error: source file not found — ${source}`);
-    await sendTelegramMessage(telegramToken, telegramChatId, `❌ *arch-copier failed*\nSource not found: \`${source}\``);
+    if (telegramToken && telegramChatId) {
+      const msg = `❌ *arch-copier failed*\n${customMessage ? customMessage + '\n' : ''}Source not found: \`${source}\``;
+      await sendTelegramMessage(telegramToken, telegramChatId, msg);
+    }
     process.exit(1);
   }
 
@@ -199,7 +206,10 @@ async function main() {
 
   if (destExists && !overwrite) {
     console.log(`File ${newFilename} already exists. Skipping.`);
-    await sendTelegramMessage(telegramToken, telegramChatId, `ℹ️ *arch-copier*\nFile already exists, skipped:\n\`${newFilename}\``);
+    if (telegramToken && telegramChatId) {
+      const msg = `ℹ️ *arch-copier*\n${customMessage ? customMessage + '\n' : ''}File already exists, skipped:\n\`${newFilename}\``;
+      await sendTelegramMessage(telegramToken, telegramChatId, msg);
+    }
     return;
   }
 
@@ -207,12 +217,9 @@ async function main() {
   const fileSize = sourceStat.size;
 
   let diskStats = null;
-  let fileCountBefore = 0;
 
   // Apply policy
   if (policy === 'L') {
-    const files = await getTargetFiles(target);
-    fileCountBefore = files.length;
     await applyLimitByCount(target, limit);
   } else {
     let requiredFree = 0;
@@ -231,7 +238,7 @@ async function main() {
     console.log(`✅ Copied as: ${newFilename}`);
 
     // Build Telegram message
-    let msg = `✅ *arch-copier succeeded*\n`;
+    let msg = customMessage ? `✅ *${customMessage}*\n` : `✅ *arch-copier succeeded*\n`;
     msg += `File: \`${newFilename}\`\n`;
 
     if (policy !== 'L' && diskStats) {
@@ -250,11 +257,16 @@ async function main() {
       msg += `\n*Archive size*: ${files.length} files`;
     }
 
-    await sendTelegramMessage(telegramToken, telegramChatId, msg);
+    if (telegramToken && telegramChatId) {
+      await sendTelegramMessage(telegramToken, telegramChatId, msg);
+    }
 
   } catch (err) {
     console.error('Copy failed:', err.message);
-    await sendTelegramMessage(telegramToken, telegramChatId, `❌ *arch-copier failed*\nCopy error:\n\`${err.message}\``);
+    if (telegramToken && telegramChatId) {
+      const msg = `❌ *${customMessage || 'arch-copier'} failed*\nCopy error:\n\`${err.message}\``;
+      await sendTelegramMessage(telegramToken, telegramChatId, msg);
+    }
     process.exit(1);
   }
 }

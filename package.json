@@ -1,6 +1,6 @@
 {
   "name": "arch-copier",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Copy file with timestamped name and manage archive with Telegram notifications",
   "main": "index.js",
   "scripts": {
